@@ -9,10 +9,22 @@ router.get("/player/:uid", async (req, res) => {
   const { uid } = req.params;
   const server = (req.query.server || "IND").toUpperCase();
   try {
-    const { data } = await axios.get(`${FF_API}/get_player_personal_show`, {
-      params: { uid, server },
-      timeout: 15000,
-    });
+    // Try local Python API first, fallback to public API
+    let data;
+    try {
+      const r = await axios.get(`${FF_API}/get_player_personal_show`, {
+        params: { uid, server },
+        timeout: 15000,
+      });
+      data = r.data;
+    } catch {
+      // Fallback to public Free Fire API
+      const r = await axios.get(`https://ff-info.vercel.app/api/player`, {
+        params: { uid, region: server },
+        timeout: 15000,
+      });
+      data = r.data;
+    }
     res.json(data);
   } catch (err) {
     const status = err.response?.status || 500;
