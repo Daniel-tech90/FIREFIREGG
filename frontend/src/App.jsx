@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/auth/AuthPage";
 import Dashboard from "./pages/dashboard/Dashboard";
 import AdminDashboard from "./pages/dashboard/AdminDashboard";
+import AdminLoginPage from "./pages/auth/AdminLoginPage";
 import TournamentDetails from "./pages/TournamentDetails";
 import WalletPage from "./pages/WalletPage";
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-secret-login" element={<AdminLoginPage />} />
           <Route path="/tournament/:id" element={<TournamentDetails />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/tournaments" element={<div className="min-h-screen pt-24 flex items-center justify-center"><p className="text-slate-400">Tournaments page coming soon</p></div>} />

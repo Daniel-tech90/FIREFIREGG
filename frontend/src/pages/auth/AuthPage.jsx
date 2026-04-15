@@ -10,7 +10,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
 
-const TABS = ["User Login", "Register", "Admin Login"];
+const TABS = ["User Login", "Register"];
 
 const countryCodes = [
   { code: "+91", flag: "🇮🇳", name: "India" },
@@ -520,7 +520,6 @@ export default function AuthPage() {
                 >
                   {tab === 0 && <UserLogin onForgot={() => setForgot(true)} />}
                   {tab === 1 && <Register />}
-                  {tab === 2 && <AdminLogin />}
                 </motion.div>
               </AnimatePresence>
 
@@ -528,7 +527,6 @@ export default function AuthPage() {
               <p className="text-center text-slate-500 text-xs mt-5">
                 {tab === 0 && <>No account? <button onClick={() => setTab(1)} className="text-cyan-400 hover:underline">Register free</button></>}
                 {tab === 1 && <>Already have an account? <button onClick={() => setTab(0)} className="text-cyan-400 hover:underline">Login</button></>}
-                {tab === 2 && <span className="text-red-400/60">Admin portal — restricted access</span>}
               </p>
             </>
           )}
