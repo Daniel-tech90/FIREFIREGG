@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiZap, FiShield, FiTarget, FiTrendingUp, FiDollarSign,
@@ -186,6 +187,17 @@ function HeroLoginCard() {
 
 // ─── Hero Section ────────────────────────────────────────────────────────────
 function Hero() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleViewMatches = (e) => {
+    if (!user) {
+      e.preventDefault();
+      toast.error("Please login to view matches 🔒");
+      navigate("/auth");
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
       {/* Background */}
@@ -236,7 +248,7 @@ function Hero() {
                 <FiPlay /> Play Now
               </span>
             </Link>
-            <Link to="/tournaments" className="btn-secondary px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
+            <Link to="/tournaments" onClick={handleViewMatches} className="btn-secondary px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
               View Matches <FiArrowRight />
             </Link>
           </div>
