@@ -2,7 +2,7 @@ import express from "express";
 import axios from "axios";
 
 const router = express.Router();
-const FF_API = "http://localhost:8000";
+const FF_API = process.env.FF_API_URL || "http://localhost:8000";
 
 // GET /api/garena/player/:uid?server=IND
 router.get("/player/:uid", async (req, res) => {
