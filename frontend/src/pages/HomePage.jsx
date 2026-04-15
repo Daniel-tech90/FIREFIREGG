@@ -291,7 +291,7 @@ const features = [
   { icon: FiShield, title: "Secure Payments", desc: "Bank-grade encryption for all transactions.", color: "green" },
   { icon: FiTarget, title: "Fair Matches", desc: "Anti-cheat system ensures every match is fair.", color: "red" },
   { icon: FiTrendingUp, title: "Live Leaderboard", desc: "Real-time rankings updated after every match.", color: "purple" },
-  { icon: FiDollarSign, title: "Fast Withdrawals", desc: "Withdraw your winnings instantly to your account.", color: "yellow" },
+  { icon: FiDollarSign, title: "Fast Withdrawals", desc: "Collect your prize directly on the UPI.", color: "yellow" },
   { icon: FiHeadphones, title: "24/7 Support", desc: "Our team is always here to help you.", color: "blue" },
 ];
 
