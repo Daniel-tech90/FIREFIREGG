@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FiZap, FiShield, FiTarget, FiTrendingUp, FiDollarSign,
   FiHeadphones, FiArrowRight, FiUsers, FiPlay,
-  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck, FiX,
+  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck, FiX, FiPhone,
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -48,6 +48,7 @@ function HeroLoginCard() {
   const [tab, setTab] = useState(0);
   const [cc, setCc] = useState("+91");
   const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pass, setPass] = useState("");
@@ -55,6 +56,12 @@ function HeroLoginCard() {
   const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
   const navigate = useNavigate();
+
+  const handlePhone = (e) => {
+    const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+    setPhone(val);
+    setPhoneError(val.length > 0 && val.length < 10 ? "Phone must be 10 digits" : "");
+  };
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -145,6 +152,18 @@ function HeroLoginCard() {
                 <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
                   <FiMail className="text-slate-500 flex-shrink-0" size={15} />
                   <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
+                </div>
+                <div>
+                  <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                    <FiPhone className="text-slate-500 flex-shrink-0" size={15} />
+                    <select value={cc} onChange={e => setCc(e.target.value)} className="bg-transparent outline-none text-slate-400 text-xs border-r border-white/10 pr-2 mr-1 cursor-pointer">
+                      {countryCodes.map(c => (
+                        <option key={c.code} value={c.code} style={{ background: "#0a0a0f" }}>{c.flag} {c.code}</option>
+                      ))}
+                    </select>
+                    <input type="tel" placeholder="Phone number" value={phone} onChange={handlePhone} maxLength={10} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
+                  </div>
+                  {phoneError && <p className="text-red-400 text-xs mt-1">{phoneError}</p>}
                 </div>
                 <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
                   <FiLock className="text-slate-500 flex-shrink-0" size={15} />
