@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import {
@@ -129,6 +129,7 @@ function UserLogin({ onForgot }) {
 function Register() {
   const [form, setForm] = useState({ name: "", username: "", email: "", phone: "", pass: "", confirm: "", uid: "", region: "", referral: "" });
   const [show, setShow] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uidFetched, setUidFetched] = useState(false);
@@ -214,7 +215,18 @@ function Register() {
         </div>
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Confirm</label>
-          <Input icon={FiLock} type="password" placeholder="Confirm" value={form.confirm} onChange={set("confirm")} />
+          <Input
+            icon={FiLock}
+            type={showConfirm ? "text" : "password"}
+            placeholder="Confirm"
+            value={form.confirm}
+            onChange={set("confirm")}
+            right={
+              <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="text-slate-500 hover:text-cyan-400">
+                {showConfirm ? <FiEyeOff /> : <FiEye />}
+              </button>
+            }
+          />
         </div>
       </div>
 
@@ -424,7 +436,9 @@ function ForgotPassword({ onBack }) {
 
 // ── Main Auth Page ────────────────────────────────────────────────────────────
 export default function AuthPage() {
-  const [tab, setTab] = useState(0);
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") === "register" ? 1 : 0;
+  const [tab, setTab] = useState(initialTab);
   const [forgot, setForgot] = useState(false);
 
   return (
