@@ -223,7 +223,7 @@ function Hero() {
             <span className="gradient-text">Competitive</span>
             <br />
             Tournaments &{" "}
-            <span className="gradient-text-fire">Win Big</span>
+            <span className="gradient-text-fire">Win Big Instantly</span>
           </h1>
 
           <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
