@@ -25,16 +25,16 @@ const regions = ["India", "South Asia", "Southeast Asia", "Middle East", "Europe
 
 function Input({ icon: Icon, type = "text", placeholder, value, onChange, right }) {
   return (
-    <div className="relative">
-      {Icon && <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm" />}
+    <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2.5 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+      {Icon && <Icon className="text-slate-500 flex-shrink-0" size={15} />}
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`input-field ${Icon ? "pl-9" : "pl-4"} ${right ? "pr-10" : ""}`}
+        className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full"
       />
-      {right && <div className="absolute right-3 top-1/2 -translate-y-1/2">{right}</div>}
+      {right && <div className="flex-shrink-0 flex items-center">{right}</div>}
     </div>
   );
 }
