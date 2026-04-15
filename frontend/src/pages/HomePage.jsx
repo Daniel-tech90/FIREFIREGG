@@ -227,7 +227,7 @@ function Hero() {
           </h1>
 
           <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
-            The ultimate Free Fire esports platform. Enter tournaments, battle the best players, and earn real cash prizes every day.
+            The ultimate Free Fire battleground for champions. Join thrilling tournaments, defeat real players, and win instant cash rewards sent directly to your UPI or bank account.
           </p>
 
           <div className="flex flex-wrap gap-3 mb-10">
