@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiZap, FiShield, FiTarget, FiTrendingUp, FiDollarSign,
   FiHeadphones, FiArrowRight, FiUsers, FiPlay,
-  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck,
+  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck, FiX,
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -185,16 +184,69 @@ function HeroLoginCard() {
   );
 }
 
+// ─── Auth Modal ───────────────────────────────────────────────────────────────
+function AuthModal({ onClose }) {
+  const navigate = useNavigate();
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center px-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        {/* Blurred backdrop */}
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+        <motion.div
+          className="relative glass-dark border border-white/10 rounded-2xl p-8 w-full max-w-sm shadow-2xl"
+          initial={{ opacity: 0, scale: 0.85, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.85, y: 20 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors">
+            <FiX size={18} />
+          </button>
+
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400/20 to-purple-600/20 border border-cyan-400/30 flex items-center justify-center mb-4">
+            <FiLock className="text-cyan-400" size={20} />
+          </div>
+
+          <h3 className="text-white font-black text-lg mb-1">Login Required</h3>
+          <p className="text-slate-400 text-sm mb-6">Please login first to view matches and join tournaments.</p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => { onClose(); navigate("/auth"); }}
+              className="btn-primary flex-1 py-2.5 rounded-xl text-sm font-bold"
+            >
+              <span>Login</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="flex-1 py-2.5 rounded-xl text-sm font-bold border border-white/10 text-slate-400 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all"
+            >
+              Cancel
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 // ─── Hero Section ────────────────────────────────────────────────────────────
 function Hero() {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   const handleViewMatches = (e) => {
     if (!user) {
       e.preventDefault();
-      toast.error("Please login to view matches 🔒");
-      navigate("/auth");
+      setShowModal(true);
     }
   };
 
@@ -252,6 +304,8 @@ function Hero() {
               View Matches <FiArrowRight />
             </Link>
           </div>
+
+          {showModal && <AuthModal onClose={() => setShowModal(false)} />}
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
