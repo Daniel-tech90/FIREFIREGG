@@ -2,29 +2,17 @@ import express from "express";
 import axios from "axios";
 
 const router = express.Router();
-const FF_API = process.env.FF_API_URL || "http://localhost:8000";
+const FF_API = "https://freefireinfo-zy9l.onrender.com";
 
 // GET /api/garena/player/:uid?server=IND
 router.get("/player/:uid", async (req, res) => {
   const { uid } = req.params;
   const server = (req.query.server || "IND").toUpperCase();
   try {
-    // Try local Python API first, fallback to public API
-    let data;
-    try {
-      const r = await axios.get(`${FF_API}/get_player_personal_show`, {
-        params: { uid, server },
-        timeout: 15000,
-      });
-      data = r.data;
-    } catch {
-      // Fallback to public Free Fire API
-      const r = await axios.get(`https://ff-info.vercel.app/api/player`, {
-        params: { uid, region: server },
-        timeout: 15000,
-      });
-      data = r.data;
-    }
+    const { data } = await axios.get(`${FF_API}/api/v1/player-profile`, {
+      params: { uid, server },
+      timeout: 20000,
+    });
     res.json(data);
   } catch (err) {
     const status = err.response?.status || 500;
@@ -37,9 +25,9 @@ router.get("/stats/:uid", async (req, res) => {
   const { uid } = req.params;
   const { server = "IND", gamemode = "br", matchmode = "CAREER" } = req.query;
   try {
-    const { data } = await axios.get(`${FF_API}/get_player_stats`, {
+    const { data } = await axios.get(`${FF_API}/api/v1/player-stats`, {
       params: { uid, server: server.toUpperCase(), gamemode, matchmode },
-      timeout: 15000,
+      timeout: 20000,
     });
     res.json(data);
   } catch (err) {
@@ -53,15 +41,20 @@ router.get("/search", async (req, res) => {
   const { keyword, server = "IND" } = req.query;
   if (!keyword) return res.status(400).json({ message: "keyword is required" });
   try {
-    const { data } = await axios.get(`${FF_API}/get_search_account_by_keyword`, {
+    const { data } = await axios.get(`${FF_API}/api/v1/search-players`, {
       params: { keyword, server: server.toUpperCase() },
-      timeout: 15000,
+      timeout: 20000,
     });
     res.json(data);
   } catch (err) {
     const status = err.response?.status || 500;
     res.status(status).json({ message: err.response?.data?.message || err.message || "Search failed" });
   }
+});
+
+// GET server time
+router.get("/server-time", (_req, res) => {
+  res.json({ now: Date.now() });
 });
 
 export default router;
