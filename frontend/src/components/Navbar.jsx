@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX, FiZap } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Tournaments", to: "/tournaments" },
-  { label: "Leaderboard", to: "/leaderboard" },
-  { label: "How It Works", to: "/how-it-works" },
-  { label: "Contact", to: "/contact" },
+  { label: "Home", to: "/", protected: false },
+  { label: "Tournaments", to: "/tournaments", protected: true },
+  { label: "Leaderboard", to: "/leaderboard", protected: true },
+  { label: "How It Works", to: "/how-it-works", protected: true },
+  { label: "Contact", to: "/contact", protected: true },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,6 +27,14 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => setOpen(false), [location]);
+
+  const handleNavClick = (e, link) => {
+    if (link.protected && !user) {
+      e.preventDefault();
+      toast.error("Please login to access this page 🔒");
+      navigate("/auth");
+    }
+  };
 
   return (
     <header
@@ -47,6 +59,7 @@ export default function Navbar() {
             <li key={link.to}>
               <Link
                 to={link.to}
+                onClick={(e) => handleNavClick(e, link)}
                 className={`text-sm font-medium transition-all duration-200 hover:text-cyan-400 relative group ${
                   location.pathname === link.to ? "text-cyan-400" : "text-slate-300"
                 }`}
@@ -95,6 +108,7 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
+                  onClick={(e) => handleNavClick(e, link)}
                   className={`text-sm font-medium py-2 px-3 rounded-lg transition-all ${
                     location.pathname === link.to
                       ? "text-cyan-400 bg-cyan-400/10"
