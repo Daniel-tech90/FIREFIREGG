@@ -218,43 +218,7 @@ function Register() {
         </div>
       </div>
 
-      {/* UID */}
-      <div>
-        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Free Fire UID</label>
-        <div className="flex gap-2">
-          <Input placeholder="Enter your UID" value={form.uid} onChange={set("uid")} />
-          <button
-            type="button"
-            onClick={fetchUID}
-            className="btn-secondary px-4 py-2 rounded-lg text-xs font-bold flex-shrink-0 whitespace-nowrap"
-          >
-            {fetchingUid ? <div className="w-4 h-4 border-2 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin" /> : "Fetch"}
-          </button>
-        </div>
-      </div>
-
-      {/* UID Card */}
-      <AnimatePresence>
-        {uidFetched && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="glass rounded-xl p-4 border border-cyan-400/20 flex items-center gap-4"
-          >
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-black text-lg flex-shrink-0">
-              FF
-            </div>
-            <div className="flex-1">
-              <p className="text-white font-bold">ProPlayer_FF</p>
-              <p className="text-slate-400 text-xs">Level 72 • India • Heroic</p>
-            </div>
-            <FiCheck className="text-green-400 text-xl" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
           <select value={form.region} onChange={set("region")} className="input-field">
