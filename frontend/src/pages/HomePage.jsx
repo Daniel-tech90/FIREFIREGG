@@ -121,13 +121,13 @@ function HeroLoginCard() {
           >
             {tab === 0 ? (
               <>
-                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiMail className="text-slate-500 text-sm flex-shrink-0" />
-                  <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-11" />
+                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                  <FiMail className="text-slate-500 flex-shrink-0" size={15} />
+                  <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
                 </div>
-                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiLock className="text-slate-500 text-sm flex-shrink-0" />
-                  <input type={show ? "text" : "password"} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-11" />
+                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                  <FiLock className="text-slate-500 flex-shrink-0" size={15} />
+                  <input type={show ? "text" : "password"} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
                   <button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
                     {show ? <FiEyeOff size={14} /> : <FiEye size={14} />}
                   </button>
@@ -138,17 +138,17 @@ function HeroLoginCard() {
               </>
             ) : (
               <>
-                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiUser className="text-slate-500 text-sm flex-shrink-0" />
-                  <input type="text" placeholder="Full name" value={name} onChange={e => setName(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-11" />
+                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                  <FiUser className="text-slate-500 flex-shrink-0" size={15} />
+                  <input type="text" placeholder="Full name" value={name} onChange={e => setName(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
                 </div>
-                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiMail className="text-slate-500 text-sm flex-shrink-0" />
-                  <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-11" />
+                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                  <FiMail className="text-slate-500 flex-shrink-0" size={15} />
+                  <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
                 </div>
-                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiLock className="text-slate-500 text-sm flex-shrink-0" />
-                  <input type={show ? "text" : "password"} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-11" />
+                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+                  <FiLock className="text-slate-500 flex-shrink-0" size={15} />
+                  <input type={show ? "text" : "password"} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
                   <button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
                     {show ? <FiEyeOff size={14} /> : <FiEye size={14} />}
                   </button>
