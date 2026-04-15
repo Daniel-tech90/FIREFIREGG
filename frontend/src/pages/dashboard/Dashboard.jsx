@@ -967,12 +967,14 @@ export default function Dashboard() {
       setUidError("");
     } catch (err) {
       const msg = err?.response?.data?.message || err?.response?.data?.error || err.message || "";
-      if (err?.response?.status === 404 || msg.toLowerCase().includes("not found")) {
+      if (err?.response?.status === 404 || msg.toLowerCase().includes("not found") || msg.toLowerCase().includes("player data not found")) {
         setUidError("Player not found. Check UID and server region.");
+      } else if (err?.response?.status === 401 || msg.toLowerCase().includes("auth") || msg.toLowerCase().includes("login")) {
+        setUidError("Game server authentication failed. Please try again in a moment.");
       } else if (!err?.response || err?.code === "ERR_NETWORK") {
-        setUidError("Game API is offline. Please try again later.");
+        setUidError("Cannot connect to server. Make sure backend is running.");
       } else {
-        setUidError("Invalid UID or player not found. Try again.");
+        setUidError("Unable to fetch player. Try a different server region or try again.");
       }
     } finally {
       setUidLoading(false);
