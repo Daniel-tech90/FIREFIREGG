@@ -246,10 +246,13 @@ function Hero() {
             {[
               { label: "Total Players", value: 250000, suffix: "+", icon: FiUsers, color: "text-cyan-400" },
               { label: "Matches Played", value: 18500, suffix: "+", icon: GiCrossedSwords, color: "text-purple-400" },
-              { label: "Winners Paid", value: 5200000, suffix: "+", icon: FiDollarSign, color: "text-yellow-400", prefix: "₹" },
+              { label: "Winners Paid", value: 5200000, suffix: "+", icon: null, color: "text-yellow-400", prefix: "₹" },
             ].map((stat) => (
               <div key={stat.label} className="glass rounded-xl p-3 text-center border border-white/5">
-                <stat.icon className={`${stat.color} text-xl mx-auto mb-1`} />
+                {stat.icon
+                  ? <stat.icon className={`${stat.color} text-xl mx-auto mb-1`} />
+                  : <span className={`${stat.color} text-xl font-black block mb-1`}>₹</span>
+                }
                 <p className="text-white font-black text-lg sm:text-xl">
                   {stat.prefix || ""}<Counter end={stat.value} suffix={stat.suffix} />
                 </p>
