@@ -922,7 +922,7 @@ export default function Dashboard() {
   // Socket — real-time winner notification
   useEffect(() => {
     if (!user?._id) return;
-    const socket = io("http://localhost:5000", { reconnectionAttempts: 2, timeout: 3000 });
+    const socket = io(import.meta.env.VITE_API_URL?.replace("/api","") || "http://localhost:5000", { reconnectionAttempts: 2, timeout: 3000 });
     socket.on(`winner:${user._id}`, (notif) => {
       setWinnerPopup(notif);
       setWinnerBanner(notif);

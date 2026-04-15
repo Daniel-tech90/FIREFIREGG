@@ -44,7 +44,7 @@ function useTournaments() {
   useEffect(() => {
     fetch();
     // Listen for real-time updates via socket
-    const socket = io("http://localhost:5000", { reconnectionAttempts: 2, timeout: 3000 });
+    const socket = io(import.meta.env.VITE_API_URL?.replace("/api","") || "http://localhost:5000", { reconnectionAttempts: 2, timeout: 3000 });
     socket.on("tournament:created",  (t) => setTournaments(prev => [t, ...prev]));
     socket.on("tournament:updated",  (t) => setTournaments(prev => prev.map(x => (x._id || x.id) === t._id ? t : x)));
     socket.on("tournament:deleted", ({ id }) => setTournaments(prev => prev.filter(x => (x._id || x.id) !== id)));

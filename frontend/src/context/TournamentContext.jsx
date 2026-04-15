@@ -24,7 +24,7 @@ export function TournamentProvider({ children }) {
     fetchTournaments();
 
     // Socket for real-time updates — failures won't affect the fetch above
-    const socket = io("http://localhost:5000", {
+    const socket = io(import.meta.env.VITE_API_URL?.replace("/api","") || "http://localhost:5000", {
       autoConnect: true,
       reconnectionAttempts: 2,
       timeout: 3000,
