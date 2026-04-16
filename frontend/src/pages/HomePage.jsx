@@ -161,18 +161,12 @@ function HeroRegisterForm({ onSwitchTab }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
-          <select value={form.region} onChange={set("region")} className="w-full h-11 bg-white/5 border border-white/10 rounded-lg px-3 text-slate-200 text-sm outline-none focus:border-cyan-400 transition-all">
-            <option value="" style={{ background: "#0a0a0f" }}>Select region</option>
-            {regions.map(r => <option key={r} value={r} style={{ background: "#0a0a0f" }}>{r}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Referral</label>
-          <FieldInput placeholder="Referral code" value={form.referral} onChange={set("referral")} />
-        </div>
+      <div>
+        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
+        <select value={form.region} onChange={set("region")} className="w-full h-11 bg-white/5 border border-white/10 rounded-lg px-3 text-slate-200 text-sm outline-none focus:border-cyan-400 transition-all">
+          <option value="" style={{ background: "#0a0a0f" }}>Select region</option>
+          {regions.map(r => <option key={r} value={r} style={{ background: "#0a0a0f" }}>{r}</option>)}
+        </select>
       </div>
 
       <label className="flex items-start gap-2 cursor-pointer">

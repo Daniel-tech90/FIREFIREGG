@@ -271,18 +271,12 @@ function Register() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
-          <select value={form.region} onChange={set("region")} className="input-field">
-            <option value="" style={{ background: "#0a0a0f" }}>Select region</option>
-            {regions.map(r => <option key={r} value={r} style={{ background: "#0a0a0f" }}>{r}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Referral (optional)</label>
-          <Input placeholder="Referral code" value={form.referral} onChange={set("referral")} />
-        </div>
+      <div>
+        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
+        <select value={form.region} onChange={set("region")} className="input-field">
+          <option value="" style={{ background: "#0a0a0f" }}>Select region</option>
+          {regions.map(r => <option key={r} value={r} style={{ background: "#0a0a0f" }}>{r}</option>)}
+        </select>
       </div>
 
       <label className="flex items-start gap-2 cursor-pointer">
