@@ -5,6 +5,9 @@ import toast from "react-hot-toast";
 import { FiMail, FiLock, FiEye, FiEyeOff, FiShield, FiAlertTriangle, FiZap } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
 
+const ADMIN_EMAIL = "admin@firefiregg.com";
+const ADMIN_PASS = "FireFireGG@Admin2025";
+
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -18,10 +21,14 @@ export default function AdminLoginPage() {
     if (!email || !pass) return toast.error("Fill all fields");
     setLoading(true);
     setTimeout(() => {
+      if (email !== ADMIN_EMAIL || pass !== ADMIN_PASS) {
+        setLoading(false);
+        return toast.error("Invalid admin credentials ❌");
+      }
       loginAdmin({ email, role: "admin" });
       toast.success("Admin access granted ✅");
       nav("/admin/dashboard");
-    }, 1800);
+    }, 1000);
   };
 
   return (
