@@ -125,6 +125,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// DELETE user by email — for resetting broken accounts (no password)
+router.delete("/reset-by-email/:email", async (req, res) => {
+  try {
+    const user = await User.findOneAndDelete({ email: req.params.email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ message: "Account deleted. User can re-register." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // POST login — validate email + password
 router.post("/login", async (req, res) => {
   try {
