@@ -190,14 +190,22 @@ function MyTournaments({ tournaments, loading, onJoin, user }) {
               {/* Join button */}
               {status !== "completed" && status !== "cancelled" && (
                 <div className="px-4 pb-4">
-                  <button
-                    onClick={onJoin}
-                    className="w-full py-2.5 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90"
-                    style={{ background: status === "live"
-                      ? "linear-gradient(135deg,#22c55e,#16a34a)"
-                      : "linear-gradient(135deg,#06b6d4,#a855f7)" }}>
-                    {status === "live" ? "🔴 Join Now" : "⏰ Register"}
-                  </button>
+                  {t.joinedPlayers?.find(p => p.id === user?._id) ? (
+                    <div className="w-full py-2.5 rounded-xl text-center text-green-400 font-bold text-sm border border-green-500/20 bg-green-500/5">
+                      ✅ Already Registered
+                    </div>
+                  ) : status === "live" ? (
+                    <div className="w-full py-2.5 rounded-xl text-center text-red-400 font-bold text-sm border border-red-500/20 bg-red-500/5">
+                      🔴 Match is Live — Registration Closed
+                    </div>
+                  ) : (
+                    <button
+                      onClick={onJoin}
+                      className="w-full py-2.5 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90"
+                      style={{ background: "linear-gradient(135deg,#06b6d4,#a855f7)" }}>
+                      ⏰ Register
+                    </button>
+                  )}
                 </div>
               )}
             </motion.div>
