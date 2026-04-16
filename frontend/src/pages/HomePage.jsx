@@ -36,21 +36,6 @@ function Counter({ end, suffix = "" }) {
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  FiZap, FiShield, FiTarget, FiTrendingUp, FiDollarSign,
-  FiHeadphones, FiArrowRight, FiUsers, FiPlay,
-  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck, FiX, FiPhone,
-} from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
-import { useGoogleLogin } from "@react-oauth/google";
-import { GiCrossedSwords, GiPodium } from "react-icons/gi";
-import { SectionTitle } from "../components/ui/index.jsx";
-import { useAuth } from "../context/AuthContext";
-import toast from "react-hot-toast";
-
 const countryCodes = [
   { code: "+91", flag: "🇮🇳" }, { code: "+1", flag: "🇺🇸" },
   { code: "+44", flag: "🇬🇧" }, { code: "+971", flag: "🇦🇪" },
