@@ -22,7 +22,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const hidden = HIDDEN_ROUTES.some(r => location.pathname.startsWith(r));
+  const isHiddenRoute = HIDDEN_ROUTES.some(r => location.pathname.startsWith(r));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -40,7 +40,8 @@ export default function Navbar() {
     }
   };
 
-  if (hidden) return null;
+  // Hide on dashboard routes OR when user is logged in
+  if (isHiddenRoute || user) return null;
 
   return (
     <header
