@@ -56,13 +56,11 @@ export default function CountdownTimer({ date, time, onExpire }) {
   const { d, h, m, s, diff } = timeLeft;
   const urgent = diff < 3600000;
   const fmt = (n) => String(n).padStart(2, "0");
-  const hours12 = h % 12 || 12;
-  const ampm = h < 12 ? "AM" : "PM";
 
   return (
     <span className={`inline-flex items-center gap-1 text-xs font-bold ${urgent ? "text-red-400 animate-pulse" : "text-orange-400"}`}>
       <FiClock size={10} />
-      {d > 0 ? `${d}d ${fmt(hours12)}h ${fmt(m)}m ${fmt(s)}s` : `${fmt(hours12)}:${fmt(m)}:${fmt(s)} ${ampm}`}
+      {d > 0 ? `${d}d ${fmt(h)}h ${fmt(m)}m ${fmt(s)}s` : `${fmt(h)}:${fmt(m)}:${fmt(s)}`}
     </span>
   );
 }
