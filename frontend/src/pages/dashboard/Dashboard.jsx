@@ -399,7 +399,8 @@ function JoinMatchPage({ tournaments, loading, user, ffName, balance, onJoined }
 
   const handleJoin = async (t) => {
     if (!user?._id) return toast.error("Not logged in");
-    if (!user?.whatsapp) return toast.error("Add your WhatsApp number first to join!");
+    const status = getStatus(t);
+    if (status === "live") return toast.error("Match is already live! Registration is closed 🔴");
     const alreadyJoined = t.joinedPlayers?.find(p => p.id === user._id);
     if (alreadyJoined) return toast.error("You already joined this tournament!");
     if (t.slotsLeft <= 0) return toast.error("No slots left!");
@@ -549,16 +550,20 @@ function JoinMatchPage({ tournaments, loading, user, ffName, balance, onJoined }
                     <div className="w-full py-2.5 rounded-xl text-center text-slate-500 font-bold text-sm border border-white/5 bg-white/3">
                       🚫 Full
                     </div>
+                  ) : status === "live" ? (
+                    <div className="w-full py-2.5 rounded-xl text-center text-red-400 font-bold text-sm border border-red-500/20 bg-red-500/5">
+                      🔴 Match is Live — Registration Closed
+                    </div>
                   ) : (
                     <button
                       onClick={() => handleJoin(t)}
                       disabled={joining === t._id}
                       className="w-full py-2.5 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 disabled:opacity-60 flex items-center justify-center gap-2"
-                      style={{ background: status === "live" ? "linear-gradient(135deg,#22c55e,#16a34a)" : "linear-gradient(135deg,#06b6d4,#a855f7)" }}
+                      style={{ background: "linear-gradient(135deg,#06b6d4,#a855f7)" }}
                     >
                       {joining === t._id
                         ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Joining...</>
-                        : status === "live" ? "🔴 Join Now" : "⏰ Register"}
+                        : "⏰ Register"}
                     </button>
                   )}
                 </div>
