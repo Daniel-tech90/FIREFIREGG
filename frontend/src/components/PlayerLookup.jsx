@@ -191,8 +191,8 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
 
       {/* Upcoming Tournaments */}
       <div className="pt-4 border-t border-white/5">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-black text-sm" style={{ background: "linear-gradient(90deg,#06b6d4,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-black text-base" style={{ background: "linear-gradient(90deg,#06b6d4,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             🏆 Upcoming Tournaments
           </h3>
           {onViewAll && (
@@ -206,22 +206,22 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
         ) : tournaments.length === 0 ? (
           <p className="text-slate-600 text-xs text-center py-4">No tournaments yet. Check back soon!</p>
         ) : (
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {tournaments.slice(0, 4).map(t => (
               <div key={t._id} onClick={onViewAll}
-                className="flex items-center gap-3 rounded-xl border border-white/5 px-3 py-2 cursor-pointer hover:border-cyan-500/30 hover:bg-white/3 transition-all"
-                style={{ background: "rgba(255,255,255,0.02)" }}>
-                <FiTarget className="text-cyan-400 flex-shrink-0" size={13} />
+                className="flex items-center gap-3 rounded-xl border border-white/5 px-4 py-3 cursor-pointer hover:border-cyan-500/30 hover:bg-white/3 transition-all"
+                style={{ background: "rgba(255,255,255,0.03)" }}>
+                <FiTarget className="text-cyan-400 flex-shrink-0" size={16} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-bold text-xs truncate">{t.name}</p>
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <span>{t.matchType || t.mode}</span>
+                  <p className="text-white font-bold text-sm truncate">{t.name}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-slate-400 text-xs">{t.matchType || t.mode}</span>
                     <CountdownTimer date={t.date} time={t.time} />
                   </div>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="text-yellow-400 font-black text-xs">₹{Number(t.prizeAmount || t.prizePool || 0).toLocaleString()}</p>
-                  <p className={`text-xs font-bold ${t.status === "live" ? "text-green-400" : t.status === "completed" ? "text-slate-500" : "text-cyan-400"}`}>
+                  <p className="text-yellow-400 font-black text-sm">₹{Number(t.prizeAmount || t.prizePool || 0).toLocaleString()}</p>
+                  <p className={`text-xs font-bold mt-0.5 ${t.status === "live" ? "text-green-400" : t.status === "completed" ? "text-slate-500" : "text-cyan-400"}`}>
                     {t.status === "live" ? "🔴 Live" : t.status === "completed" ? "✅ Done" : "⏰ Soon"}
                   </p>
                 </div>

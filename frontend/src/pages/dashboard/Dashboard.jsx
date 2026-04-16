@@ -1275,20 +1275,20 @@ export default function Dashboard() {
             />
           ) : (<>
           {/* Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-4 lg:grid-cols-4 gap-2 mb-6">
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`glass rounded-xl p-4 bg-gradient-to-br ${s.color} border card-hover`}
+                className={`glass rounded-xl p-2.5 bg-gradient-to-br ${s.color} border card-hover`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-slate-400 text-xs uppercase tracking-wider">{s.label}</span>
-                  <s.icon className="text-base opacity-60" />
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-slate-400 text-xs uppercase tracking-wider leading-tight" style={{fontSize:"9px"}}>{s.label}</span>
+                  <s.icon className="text-xs opacity-60 flex-shrink-0" size={12} />
                 </div>
-                <p className="text-white font-black text-xl">{s.value}</p>
+                <p className="text-white font-black text-sm">{s.value}</p>
               </motion.div>
             ))}
           </div>
