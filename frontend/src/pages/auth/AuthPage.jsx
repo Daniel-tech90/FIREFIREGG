@@ -486,8 +486,8 @@ export default function AuthPage() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2">
             <div className="relative w-12 h-12 flex-shrink-0">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 blur-lg opacity-80" />
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-yellow-400/70" style={{ boxShadow: "0 0 24px rgba(250,204,21,0.7), 0 0 48px rgba(249,115,22,0.4)" }}>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400 via-cyan-500 to-purple-600 blur-lg opacity-90" />
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-cyan-400/80" style={{ boxShadow: "0 0 28px rgba(0,212,255,0.9), 0 0 56px rgba(168,85,247,0.5)" }}>
                 <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
               </div>
             </div>

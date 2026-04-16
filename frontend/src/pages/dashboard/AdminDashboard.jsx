@@ -1309,8 +1309,8 @@ export default function AdminDashboard() {
         <div className="p-5 border-b border-red-500/10">
           <Link to="/" className="flex items-center gap-2">
             <div className="relative w-9 h-9 flex-shrink-0">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 blur-md opacity-70" />
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-yellow-400/60" style={{ boxShadow: "0 0 14px rgba(250,204,21,0.6)" }}>
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-400 via-cyan-500 to-purple-600 blur-md opacity-70" />
+              <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-cyan-400/70" style={{ boxShadow: "0 0 14px rgba(0,212,255,0.8), 0 0 28px rgba(168,85,247,0.4)" }}>
                 <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
               </div>
             </div>
