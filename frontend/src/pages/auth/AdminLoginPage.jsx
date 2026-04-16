@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -13,8 +13,13 @@ export default function AdminLoginPage() {
   const [pass, setPass] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { loginAdmin } = useAuth();
+  const { loginAdmin, admin } = useAuth();
   const nav = useNavigate();
+
+  // Already logged in as admin — go straight to dashboard
+  useEffect(() => {
+    if (admin) nav("/admin/dashboard", { replace: true });
+  }, [admin]);
 
   const submit = (e) => {
     e.preventDefault();

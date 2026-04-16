@@ -1285,6 +1285,13 @@ export default function AdminDashboard() {
   const { tournaments, loading: tLoading, add, remove } = useTournaments();
   const nav = useNavigate();
 
+  // Auth guard — redirect to admin login if not authenticated
+  useEffect(() => {
+    if (!admin) nav("/admin-secret-login", { replace: true });
+  }, [admin]);
+
+  if (!admin) return null;
+
   const handleLogout = () => { logout(); toast.success("Admin logged out"); nav("/auth"); };
 
   const stats = [
