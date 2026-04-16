@@ -185,7 +185,7 @@ function Register() {
 
   return (
     <form onSubmit={submit} className="space-y-3">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
           <Input icon={FiUser} placeholder="Your name" value={form.name} onChange={set("name")} />
@@ -226,7 +226,7 @@ function Register() {
         {phoneError && <p className="text-red-400 text-xs mt-1">{phoneError}</p>}
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
           <Input
@@ -259,7 +259,7 @@ function Register() {
         </div>
       </div>
 
-<div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
           <select value={form.region} onChange={set("region")} className="input-field">

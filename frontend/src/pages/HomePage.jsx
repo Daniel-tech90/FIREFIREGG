@@ -376,19 +376,19 @@ function Hero() {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-cyan-400/20 text-cyan-400 text-xs font-semibold mb-6 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-cyan-400/20 text-cyan-400 text-xs font-semibold mb-4 sm:mb-6 uppercase tracking-widest">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             Live Tournaments Active
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white mb-4">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight text-white mb-4">
             Join{" "}
             <span className="gradient-text">Competitive</span>
             <br />
@@ -396,36 +396,41 @@ function Hero() {
             <span className="gradient-text-fire">Win Big Instantly</span>
           </h1>
 
-          <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
+          <p className="text-slate-400 text-sm sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg">
             The ultimate Free Fire battleground for champions. Join thrilling tournaments, defeat real players, and win instant cash rewards sent directly to your UPI or bank account.
           </p>
 
-          <div className="flex flex-wrap gap-3 mb-10">
-            <Link to="/auth?tab=register" className="btn-primary px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
+          <div className="flex flex-wrap gap-3 mb-6 sm:mb-10">
+            <Link to="/auth?tab=register" className="btn-primary px-5 sm:px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
               <span className="flex items-center gap-2">
                 <FiPlay /> Play Now
               </span>
             </Link>
-            <Link to="/tournaments" onClick={handleViewMatches} className="btn-secondary px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
+            <Link to="/tournaments" onClick={handleViewMatches} className="btn-secondary px-5 sm:px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
               View Matches <FiArrowRight />
             </Link>
           </div>
 
           {showModal && <AuthModal onClose={() => setShowModal(false)} />}
 
+          {/* Mobile Login Card — shown only on mobile */}
+          <div className="lg:hidden mb-6">
+            <HeroLoginCard />
+          </div>
+
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {[
-              { label: "Total Players", value: 250000, suffix: "+", icon: FiUsers, color: "text-cyan-400" },
-              { label: "Matches Played", value: 18500, suffix: "+", icon: GiCrossedSwords, color: "text-purple-400" },
-              { label: "Winners Paid", value: 5200000, suffix: "+", icon: null, color: "text-yellow-400", prefix: "₹" },
+              { label: "Players", value: 250000, suffix: "+", icon: FiUsers, color: "text-cyan-400" },
+              { label: "Matches", value: 18500, suffix: "+", icon: GiCrossedSwords, color: "text-purple-400" },
+              { label: "Paid Out", value: 5200000, suffix: "+", icon: null, color: "text-yellow-400", prefix: "₹" },
             ].map((stat) => (
-              <div key={stat.label} className="glass rounded-xl p-3 text-center border border-white/5">
+              <div key={stat.label} className="glass rounded-xl p-2 sm:p-3 text-center border border-white/5">
                 {stat.icon
-                  ? <stat.icon className={`${stat.color} text-xl mx-auto mb-1`} />
-                  : <span className={`${stat.color} text-xl font-black block mb-1`}>₹</span>
+                  ? <stat.icon className={`${stat.color} text-lg sm:text-xl mx-auto mb-1`} />
+                  : <span className={`${stat.color} text-lg sm:text-xl font-black block mb-1`}>₹</span>
                 }
-                <p className="text-white font-black text-lg sm:text-xl">
+                <p className="text-white font-black text-sm sm:text-xl">
                   {stat.prefix || ""}<Counter end={stat.value} suffix={stat.suffix} />
                 </p>
                 <p className="text-slate-500 text-xs">{stat.label}</p>
@@ -434,7 +439,7 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* Right — Inline Login Card */}
+        {/* Right — Inline Login Card — desktop only */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}

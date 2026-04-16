@@ -111,26 +111,27 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             className="lg:hidden glass-dark border-t border-white/5"
           >
-            <div className="px-4 py-4 flex flex-col gap-3">
+            <div className="px-4 py-5 flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   onClick={(e) => handleNavClick(e, link)}
-                  className={`text-sm font-medium py-2 px-3 rounded-lg transition-all ${
+                  className={`flex items-center gap-3 text-sm font-medium py-3 px-4 rounded-xl transition-all ${
                     location.pathname === link.to
-                      ? "text-cyan-400 bg-cyan-400/10"
+                      ? "text-cyan-400 bg-cyan-400/10 border border-cyan-400/20"
                       : "text-slate-300 hover:text-cyan-400 hover:bg-white/5"
                   }`}
                 >
                   {link.label}
+                  {link.protected && !user && <span className="ml-auto text-xs text-slate-600">🔒</span>}
                 </Link>
               ))}
-              <div className="flex gap-3 pt-2 border-t border-white/5">
-                <Link to="/auth" className="flex-1 btn-secondary text-sm text-center py-2 rounded-lg">
+              <div className="grid grid-cols-2 gap-3 pt-3 mt-1 border-t border-white/5">
+                <Link to="/auth" className="btn-secondary text-sm text-center py-3 rounded-xl font-bold">
                   Login
                 </Link>
-                <Link to="/auth?tab=register" className="flex-1 btn-primary text-sm text-center py-2 rounded-lg">
+                <Link to="/auth?tab=register" className="btn-primary text-sm text-center py-3 rounded-xl font-bold">
                   <span>Register</span>
                 </Link>
               </div>
