@@ -54,11 +54,19 @@ export default function CountdownTimer({ date, time, onExpire }) {
   if (!timeLeft) return null;
 
   const { d, h, m, s, diff } = timeLeft;
-  const urgent = diff < 3600000;
+  const urgent = diff < 3600000;   // < 1 hour
+  const soon   = diff < 86400000;  // < 1 day
   const fmt = (n) => String(n).padStart(2, "0");
 
+  const color = urgent
+    ? "text-red-400"
+    : soon
+    ? "text-yellow-400"
+    : "text-cyan-400";
+
   return (
-    <span className={`inline-flex items-center gap-1 text-xs font-bold ${urgent ? "text-red-400 animate-pulse" : "text-orange-400"}`}>
+    <span className={`inline-flex items-center gap-1 text-xs font-black ${color} ${urgent ? "animate-pulse" : ""}`}
+      style={{ textShadow: urgent ? "0 0 8px rgba(248,113,113,0.8)" : soon ? "0 0 8px rgba(250,204,21,0.7)" : "0 0 8px rgba(0,212,255,0.7)" }}>
       <FiClock size={10} />
       {d > 0 ? `${d}d ${fmt(h)}h ${fmt(m)}m ${fmt(s)}s` : `${fmt(h)}:${fmt(m)}:${fmt(s)}`}
     </span>
