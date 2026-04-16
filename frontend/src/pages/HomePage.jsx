@@ -140,15 +140,23 @@ function HeroRegisterForm({ onSwitchTab }) {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
-          <FieldInput icon={FiLock} type={show ? "text" : "password"} placeholder="Password" value={form.pass} onChange={set("pass")}
-            right={<button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400">{show ? <FiEyeOff size={14} /> : <FiEye size={14} />}</button>}
-          />
+          <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+            <FiLock className="text-slate-500 flex-shrink-0" size={14} />
+            <input type={show ? "text" : "password"} placeholder="Password" value={form.pass} onChange={set("pass")} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full min-w-0" />
+            <button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
+              {show ? <FiEyeOff size={13} /> : <FiEye size={13} />}
+            </button>
+          </div>
         </div>
         <div>
           <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Confirm</label>
-          <FieldInput icon={FiLock} type={showConfirm ? "text" : "password"} placeholder="Confirm" value={form.confirm} onChange={set("confirm")}
-            right={<button type="button" onClick={() => setShowConfirm(!showConfirm)} className="text-slate-500 hover:text-cyan-400">{showConfirm ? <FiEyeOff size={14} /> : <FiEye size={14} />}</button>}
-          />
+          <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
+            <FiLock className="text-slate-500 flex-shrink-0" size={14} />
+            <input type={showConfirm ? "text" : "password"} placeholder="Confirm" value={form.confirm} onChange={set("confirm")} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full min-w-0" />
+            <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
+              {showConfirm ? <FiEyeOff size={13} /> : <FiEye size={13} />}
+            </button>
+          </div>
         </div>
       </div>
 
