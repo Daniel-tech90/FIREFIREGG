@@ -40,9 +40,8 @@ export default function Navbar() {
     }
   };
 
-  // Hide on dashboard routes OR when user is logged in (check both context and localStorage)
-  const isLoggedIn = !!user || !!localStorage.getItem("ff_user");
-  if (isHiddenRoute || isLoggedIn) return null;
+  // Hide only on dashboard/admin routes — show on all public pages regardless of login
+  if (isHiddenRoute) return null;
 
   return (
     <header
