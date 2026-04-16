@@ -107,20 +107,20 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
 
       {/* Player Card — compact */}
       {info && (
-        <div className="rounded-xl border border-orange-400/15 overflow-hidden mb-3" style={{ background: "rgba(249,115,22,0.04)" }}>
+        <div className="rounded-xl border border-orange-400/15 overflow-hidden mb-3" style={{ background: "rgba(249,115,22,0.04)", fontSize: "11px" }}>
 
           {/* Row 1: Avatar + Name + Level */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-black flex-shrink-0">
+          <div className="flex items-center gap-2 px-3 py-2 border-b border-white/5">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-black flex-shrink-0 text-xs">
               {info.nickname?.[0] || "?"}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-black text-sm truncate">{info.nickname}</p>
-              <p className="text-slate-500 text-xs">{info.accountid} · {info.region} · {info.releaseversion}</p>
+              <p className="text-white font-black text-xs truncate">{info.nickname}</p>
+              <p className="text-slate-500" style={{fontSize:"10px"}}>{info.accountid} · {info.region} · {info.releaseversion}</p>
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-yellow-400 font-black">Lv.{info.level}</p>
-              <p className="text-slate-500 text-xs">{Number(info.exp || 0).toLocaleString()} XP</p>
+              <p className="text-yellow-400 font-black text-xs">Lv.{info.level}</p>
+              <p className="text-slate-500" style={{fontSize:"10px"}}>{Number(info.exp || 0).toLocaleString()} XP</p>
             </div>
           </div>
 
@@ -134,37 +134,35 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
               { l: "Pet Lv",  v: pet?.level ? `${pet.level}` : "—", c: "text-orange-400" },
               { l: "Last On", v: lastSeen(info.lastloginat), c: "text-slate-300"   },
             ].map(({ l, v, c }) => (
-              <div key={l} className="py-2 text-center">
-                <p className={`font-black text-xs ${c}`}>{v}</p>
-                <p className="text-slate-600 text-xs">{l}</p>
+              <div key={l} className="py-1.5 text-center">
+                <p className={`font-black ${c}`} style={{fontSize:"10px"}}>{v}</p>
+                <p className="text-slate-600" style={{fontSize:"9px"}}>{l}</p>
               </div>
             ))}
           </div>
 
-          {/* Row 3: Guild + Mode + Bio in one line */}
-          <div className="flex items-center gap-3 px-4 py-2 text-xs flex-wrap">
-            {clan?.clanname && <span className="text-orange-400 font-bold">🏰 {clan.clanname} (Lv.{clan.clanlevel})</span>}
-            {social?.modeprefer && <span className="text-slate-400">· {social.modeprefer.replace("MODEPREFER", "")} mode</span>}
-            {social?.signature && <span className="text-slate-500 truncate max-w-xs">{cleanBio(social.signature)}</span>}
+          {/* Row 3: Guild + Mode + Bio */}
+          <div className="flex items-center gap-2 px-3 py-1.5 flex-wrap border-b border-white/5">
+            {clan?.clanname && <span className="text-orange-400 font-bold" style={{fontSize:"10px"}}>🏰 {clan.clanname} (Lv.{clan.clanlevel})</span>}
+            {social?.modeprefer && <span className="text-slate-400" style={{fontSize:"10px"}}>· {social.modeprefer.replace("MODEPREFER", "")} mode</span>}
+            {social?.signature && <span className="text-slate-500 truncate max-w-xs" style={{fontSize:"10px"}}>{cleanBio(social.signature)}</span>}
           </div>
 
           {/* Row 4: BR Stats tabs */}
           {stats && (
-            <div className="border-t border-white/5">
-              {/* Tab switcher */}
+            <div>
               <div className="flex border-b border-white/5">
                 {["solo", "duo", "squad"].map(t => (
                   <button key={t} onClick={() => setTab(t)}
-                    className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider transition-all ${
-                      tab === t ? "text-orange-400 border-b-2 border-orange-400" : "text-slate-600 hover:text-slate-400"
-                    }`}>
+                    className={`flex-1 py-1 font-bold uppercase tracking-wider transition-all ${
+                      tab === t ? "text-orange-400 border-b-2 border-orange-400" : "text-slate-600"
+                    }`} style={{fontSize:"10px"}}>
                     {t}
                   </button>
                 ))}
               </div>
-              {/* Stats grid */}
               {s?.gamesplayed ? (
-                <div className="grid grid-cols-4 divide-x divide-white/5 px-0">
+                <div className="grid grid-cols-4 divide-x divide-white/5">
                   {[
                     { l: "Games", v: s.gamesplayed?.toLocaleString() },
                     { l: "Wins",  v: s.wins?.toLocaleString(),        c: "text-yellow-400" },
@@ -175,14 +173,14 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
                     { l: "Best",  v: s.detailedstats?.highestKills || "—", c: "text-purple-400" },
                     { l: "Dmg",   v: (Number(s.detailedstats?.damage || 0) / 1000).toFixed(0) + "K" },
                   ].map(({ l, v, c = "text-white" }) => (
-                    <div key={l} className="py-2 text-center">
-                      <p className={`font-black text-xs ${c}`}>{v}</p>
-                      <p className="text-slate-600 text-xs">{l}</p>
+                    <div key={l} className="py-1.5 text-center">
+                      <p className={`font-black ${c}`} style={{fontSize:"10px"}}>{v}</p>
+                      <p className="text-slate-600" style={{fontSize:"9px"}}>{l}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-slate-600 text-xs text-center py-3">No {tab} stats</p>
+                <p className="text-slate-600 text-center py-2" style={{fontSize:"10px"}}>No {tab} stats</p>
               )}
             </div>
           )}
@@ -207,10 +205,16 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
           <p className="text-slate-600 text-xs text-center py-4">No tournaments yet. Check back soon!</p>
         ) : (
           <div className="space-y-2">
-            {tournaments.slice(0, 4).map(t => (
+            {tournaments.slice(0, 4).map((t, i) => (
               <div key={t._id} onClick={onViewAll}
-                className="flex items-center gap-3 rounded-xl border border-white/5 px-4 py-3 cursor-pointer hover:border-cyan-500/30 hover:bg-white/3 transition-all"
-                style={{ background: "rgba(255,255,255,0.03)" }}>
+                className="flex items-center gap-3 rounded-xl px-4 py-3 cursor-pointer transition-all"
+                style={{
+                  background: "linear-gradient(135deg,rgba(6,182,212,0.08),rgba(168,85,247,0.06))",
+                  border: "1px solid rgba(6,182,212,0.25)",
+                  boxShadow: i % 2 === 0
+                    ? "0 0 12px rgba(6,182,212,0.15), inset 0 0 12px rgba(6,182,212,0.05)"
+                    : "0 0 12px rgba(168,85,247,0.15), inset 0 0 12px rgba(168,85,247,0.05)",
+                }}>
                 <FiTarget className="text-cyan-400 flex-shrink-0" size={16} />
                 <div className="flex-1 min-w-0">
                   <p className="text-white font-bold text-sm truncate">{t.name}</p>
