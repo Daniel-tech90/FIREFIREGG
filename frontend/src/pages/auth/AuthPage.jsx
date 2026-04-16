@@ -190,7 +190,12 @@ function Register() {
         nav("/dashboard");
       })
       .catch(err => {
-        toast.error(err?.response?.data?.message || "Registration failed");
+        const msg = err?.response?.data?.message || "Registration failed";
+        if (msg.includes("duplicate") || msg.includes("already")) {
+          toast.error("Email already registered. Please login.");
+        } else {
+          toast.error(msg);
+        }
       })
       .finally(() => setLoading(false));
   };

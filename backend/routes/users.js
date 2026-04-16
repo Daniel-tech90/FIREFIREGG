@@ -145,29 +145,36 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// POST register / upsert user on login
+// POST register — create new account with hashed password
 router.post("/register", async (req, res) => {
   try {
     const { name, email, avatar, method, password } = req.body;
     if (!name || !email) return res.status(400).json({ message: "Name and email required" });
 
     const existing = await User.findOne({ email });
-    if (existing) {
-      // Google login — just update profile
-      const updated = await User.findOneAndUpdate(
+
+    // Google OAuth login — upsert profile only
+    if (method === "Google") {
+      const user = await User.findOneAndUpdate(
         { email },
-        { name, avatar: avatar || "", method: method || "Email" },
-        { new: true }
+        { name, avatar: avatar || "", method: "Google" },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
       );
-      return res.json(updated);
+      return res.json(user);
     }
 
-    // New registration — hash password
-    const hashed = password ? await bcrypt.hash(password, 10) : "";
+    // Email registration — reject if already exists
+    if (existing) {
+      return res.status(409).json({ message: "Email already registered. Please login." });
+    }
+
+    // New user — hash password and create
+    if (!password) return res.status(400).json({ message: "Password is required" });
+    const hashed = await bcrypt.hash(password, 10);
     const user = await User.create({
       name, email,
-      avatar: avatar || "",
-      method: method || "Email",
+      avatar: "",
+      method: "Email",
       password: hashed,
     });
     res.json(user);

@@ -100,12 +100,19 @@ function HeroRegisterForm({ onSwitchTab }) {
     e.preventDefault();
     if (!terms) return toast.error("Accept terms to continue");
     if (form.pass !== form.confirm) return toast.error("Passwords don't match");
+    if (form.pass.length < 6) return toast.error("Password must be at least 6 characters");
     setLoading(true);
-    setTimeout(() => {
-      loginUser({ name: form.name, email: form.email });
-      toast.success("Account created! Welcome 🎮");
-      navigate("/dashboard");
-    }, 1800);
+    API.post("/users/register", { name: form.name, email: form.email, password: form.pass, method: "Email" })
+      .then(({ data }) => {
+        loginUser(data);
+        toast.success("Account created! Welcome 🎮");
+        navigate("/dashboard");
+      })
+      .catch(err => {
+        const msg = err?.response?.data?.message || "Registration failed";
+        toast.error(msg);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

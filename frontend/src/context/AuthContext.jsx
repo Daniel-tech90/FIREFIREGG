@@ -41,13 +41,18 @@ export function AuthProvider({ children }) {
       avatar: userData.avatar || "",
       method: userData.avatar ? "Google" : "Email",
     };
+    // If userData already has _id it came directly from backend — just set it
+    if (userData._id) {
+      setUser({ ...userData, id: userData._id });
+      fetchUsers();
+      return;
+    }
     try {
       const { data } = await API.post("/users/register", newUser);
       const localUser = { ...data, id: data._id };
       setUser(localUser);
       fetchUsers();
     } catch {
-      // fallback to local only
       const localUser = { ...newUser, id: userData.email || Date.now(), status: "active" };
       setUser(localUser);
     }
