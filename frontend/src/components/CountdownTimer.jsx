@@ -65,8 +65,8 @@ export default function CountdownTimer({ date, time, onExpire }) {
     : "text-red-500";
 
   return (
-    <span className={`inline-flex items-center gap-1 text-xs font-black ${color} ${urgent ? "animate-pulse" : ""}`}
-      style={{ textShadow: urgent ? "0 0 8px rgba(239,68,68,0.9)" : soon ? "0 0 8px rgba(239,68,68,0.7)" : "0 0 8px rgba(239,68,68,0.7)" }}>
+    <span className={`inline-flex items-center gap-1 text-sm font-black ${color} ${urgent ? "animate-pulse" : ""}`}
+      style={{ textShadow: urgent ? "0 0 8px rgba(239,68,68,0.9)" : "0 0 8px rgba(239,68,68,0.7)" }}>
       <FiClock size={10} />
       {d > 0 ? `${d}d ${fmt(h)}h ${fmt(m)}m ${fmt(s)}s` : `${fmt(h)}:${fmt(m)}:${fmt(s)}`}
     </span>
