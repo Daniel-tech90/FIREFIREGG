@@ -4,14 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FiZap, FiShield, FiTarget, FiTrendingUp, FiDollarSign,
   FiHeadphones, FiArrowRight, FiUsers, FiPlay,
-  FiChevronRight, FiLock, FiEye, FiEyeOff, FiMail, FiUser, FiCheck, FiX, FiPhone,
+  FiChevronRight, FiLock, FiX,
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GiCrossedSwords, GiPodium } from "react-icons/gi";
 import { SectionTitle } from "../components/ui/index.jsx";
 import { useAuth } from "../context/AuthContext";
-import API from "../api/axios";
 import toast from "react-hot-toast";
 
 // ─── Animated Counter ───────────────────────────────────────────────────────
@@ -37,171 +36,11 @@ function Counter({ end, suffix = "" }) {
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
-const countryCodes = [
-  { code: "+91", flag: "🇮🇳" }, { code: "+1", flag: "🇺🇸" },
-  { code: "+44", flag: "🇬🇧" }, { code: "+971", flag: "🇦🇪" },
-  { code: "+60", flag: "🇲🇾" }, { code: "+62", flag: "🇮🇩" },
-];
-
-const regions = ["India", "South Asia", "Southeast Asia", "Middle East", "Europe", "Americas"];
-
-const TABS = ["Login", "Register"];
-
-// ─── Reusable Input ───────────────────────────────────────────────────────────────
-function FieldInput({ icon: Icon, type = "text", placeholder, value, onChange, right }) {
-  return (
-    <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2.5 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-      {Icon && <Icon className="text-slate-500 flex-shrink-0" size={15} />}
-      <input type={type} placeholder={placeholder} value={value} onChange={onChange}
-        className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
-      {right && <div className="flex-shrink-0 flex items-center">{right}</div>}
-    </div>
-  );
-}
-
-// ─── Full Register Form (same as AuthPage) ────────────────────────────────────────
-function HeroRegisterForm({ onSwitchTab }) {
-  const [form, setForm] = useState({ name: "", username: "", email: "", phone: "", pass: "", confirm: "", region: "", referral: "" });
-  const [cc, setCc] = useState("+91");
-  const [show, setShow] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [phoneError, setPhoneError] = useState("");
-  const [terms, setTerms] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { loginUser } = useAuth();
-  const navigate = useNavigate();
-
-  const googleSignup = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        });
-        const profile = await res.json();
-        loginUser({ name: profile.name, email: profile.email, avatar: profile.picture });
-        toast.success(`Account created! Welcome, ${profile.name}! 🚀`);
-        navigate("/dashboard");
-      } catch {
-        toast.error("Google signup failed. Try again.");
-      }
-    },
-    onError: () => toast.error("Google signup failed. Try again."),
-  });
-
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
-
-  const handlePhone = (e) => {
-    const val = e.target.value.replace(/\D/g, "").slice(0, 10);
-    setForm(f => ({ ...f, phone: val }));
-    setPhoneError(val.length > 0 && val.length < 10 ? "Phone must be 10 digits" : "");
-  };
-
-  const submit = (e) => {
-    e.preventDefault();
-    if (!terms) return toast.error("Accept terms to continue");
-    if (form.pass !== form.confirm) return toast.error("Passwords don't match");
-    if (form.pass.length < 6) return toast.error("Password must be at least 6 characters");
-    setLoading(true);
-    API.post("/users/register", { name: form.name, email: form.email, password: form.pass, method: "Email" })
-      .then(({ data }) => {
-        loginUser(data);
-        toast.success("Account created! Welcome 🎮");
-        navigate("/dashboard");
-      })
-      .catch(err => {
-        const msg = err?.response?.data?.message || "Registration failed";
-        toast.error(msg);
-      })
-      .finally(() => setLoading(false));
-  };
-
-  return (
-    <form onSubmit={submit} className="space-y-3">
-      <div>
-        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
-        <FieldInput icon={FiUser} placeholder="Your name" value={form.name} onChange={set("name")} />
-      </div>
-
-      <div>
-        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Email</label>
-        <FieldInput icon={FiMail} type="email" placeholder="you@email.com" value={form.email} onChange={set("email")} />
-      </div>
-
-      <div>
-        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
-        <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2.5 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-          <FiPhone className="text-slate-500 flex-shrink-0" size={15} />
-          <select value={cc} onChange={e => setCc(e.target.value)} className="bg-transparent outline-none text-slate-400 text-xs border-r border-white/10 pr-2 mr-1 cursor-pointer">
-            {countryCodes.map(c => <option key={c.code} value={c.code} style={{ background: "#0a0a0f" }}>{c.flag} {c.code}</option>)}
-          </select>
-          <input type="tel" placeholder="Phone number" value={form.phone} onChange={handlePhone} maxLength={10} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
-        </div>
-        {phoneError && <p className="text-red-400 text-xs mt-1">{phoneError}</p>}
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
-          <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-            <FiLock className="text-slate-500 flex-shrink-0" size={14} />
-            <input type={show ? "text" : "password"} placeholder="Password" value={form.pass} onChange={set("pass")} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full min-w-0" />
-            <button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
-              {show ? <FiEyeOff size={13} /> : <FiEye size={13} />}
-            </button>
-          </div>
-        </div>
-        <div>
-          <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Confirm</label>
-          <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-            <FiLock className="text-slate-500 flex-shrink-0" size={14} />
-            <input type={showConfirm ? "text" : "password"} placeholder="Confirm" value={form.confirm} onChange={set("confirm")} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full min-w-0" />
-            <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
-              {showConfirm ? <FiEyeOff size={13} /> : <FiEye size={13} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1.5">Region</label>
-        <select value={form.region} onChange={set("region")} className="w-full h-11 bg-white/5 border border-white/10 rounded-lg px-3 text-slate-200 text-sm outline-none focus:border-cyan-400 transition-all">
-          <option value="" style={{ background: "#0a0a0f" }}>Select region</option>
-          {regions.map(r => <option key={r} value={r} style={{ background: "#0a0a0f" }}>{r}</option>)}
-        </select>
-      </div>
-
-      <label className="flex items-start gap-2 cursor-pointer">
-        <div onClick={() => setTerms(!terms)} className={`w-4 h-4 rounded border flex items-center justify-center mt-0.5 flex-shrink-0 transition-all ${terms ? "bg-cyan-400 border-cyan-400" : "border-white/20 bg-white/5"}`}>
-          {terms && <FiCheck className="text-black text-xs" />}
-        </div>
-        <span className="text-slate-400 text-xs leading-relaxed">
-          I agree to the <Link to="#" className="text-cyan-400 hover:underline">Terms</Link> and <Link to="#" className="text-cyan-400 hover:underline">Privacy Policy</Link>
-        </span>
-      </label>
-
-      <button type="submit" disabled={loading} className="btn-primary w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-        {loading ? <span className="flex items-center gap-2"><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Creating Account...</span> : <span>Create Account 🚀</span>}
-      </button>
-
-      <button type="button" onClick={() => googleSignup()} className="w-full glass border border-white/10 rounded-xl py-2.5 flex items-center justify-center gap-2 text-xs font-medium text-slate-300 hover:border-white/20 hover:bg-white/5 transition-all">
-        <FcGoogle className="text-lg" /> Sign up with Google
-      </button>
-
-      <p className="text-center text-slate-500 text-xs">Already have an account? <button type="button" onClick={onSwitchTab} className="text-cyan-400 hover:underline">Login</button></p>
-    </form>
-  );
-}
-
 function HeroLoginCard() {
-  const [tab, setTab] = useState(0);
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleGoogleLogin = useGoogleLogin({
+  const handleGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
@@ -218,80 +57,23 @@ function HeroLoginCard() {
     onError: () => toast.error("Google login failed. Try again."),
   });
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!email || !pass) return toast.error("Fill all fields");
-    setLoading(true);
-    API.post("/users/login", { email, password: pass })
-      .then(({ data }) => { loginUser(data); toast.success("Welcome back! 🎮"); navigate("/dashboard"); })
-      .catch(err => toast.error(err?.response?.data?.message || "Login failed"))
-      .finally(() => setLoading(false));
-  };
-
   return (
     <div className="relative w-full max-w-sm">
       <div className="absolute inset-0 rounded-3xl bg-cyan-400/10 blur-3xl animate-pulse" />
       <div className="relative glass-dark rounded-3xl p-7 border border-white/10">
         <h3 className="text-white font-black text-xl mb-1">Get Started</h3>
-        <p className="text-slate-400 text-xs mb-5">Join 250,000+ players competing daily</p>
-
-        {/* Tabs */}
-        <div className="flex gap-1 glass rounded-xl p-1 mb-5">
-          {TABS.map((t, i) => (
-            <button
-              key={t}
-              onClick={() => setTab(i)}
-              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all duration-200 ${
-                tab === i ? "bg-cyan-400/10 text-cyan-400 border border-cyan-400/20" : "text-slate-500 hover:text-slate-300"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+        <p className="text-slate-400 text-xs mb-6">Join 250,000+ players competing daily</p>
+        <div className="space-y-3">
+          <p className="text-slate-300 text-sm text-center">Sign in or create your account instantly</p>
+          <button
+            type="button"
+            onClick={() => handleGoogle()}
+            className="w-full glass border border-white/10 rounded-xl py-3.5 flex items-center justify-center gap-3 text-sm font-bold text-slate-200 hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all"
           >
-            {tab === 0 ? (
-              <form onSubmit={handleLogin} className="space-y-3">
-                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiMail className="text-slate-500 flex-shrink-0" size={15} />
-                  <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
-                </div>
-                <div className="flex items-center h-11 bg-white/5 border border-white/10 rounded-lg px-3 gap-2 focus-within:border-cyan-400 focus-within:bg-cyan-400/5 transition-all">
-                  <FiLock className="text-slate-500 flex-shrink-0" size={15} />
-                  <input type={show ? "text" : "password"} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} className="flex-1 bg-transparent outline-none text-slate-200 text-sm placeholder:text-white/30 h-full" />
-                  <button type="button" onClick={() => setShow(!show)} className="text-slate-500 hover:text-cyan-400 flex-shrink-0">
-                    {show ? <FiEyeOff size={14} /> : <FiEye size={14} />}
-                  </button>
-                </div>
-                <div className="flex justify-end">
-                  <Link to="/auth" className="text-cyan-400 text-xs hover:underline">Forgot password?</Link>
-                </div>
-                <button type="submit" disabled={loading} className="btn-primary w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-                  {loading ? <span className="flex items-center gap-2"><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Logging in...</span> : <span>Login to Account</span>}
-                </button>
-                <div className="relative flex items-center gap-3">
-                  <div className="flex-1 h-px bg-white/10" />
-                  <span className="text-slate-500 text-xs">or</span>
-                  <div className="flex-1 h-px bg-white/10" />
-                </div>
-                <button type="button" onClick={() => handleGoogleLogin()} className="w-full glass border border-white/10 rounded-xl py-2.5 flex items-center justify-center gap-2 text-xs font-medium text-slate-300 hover:border-white/20 hover:bg-white/5 transition-all">
-                  <FcGoogle className="text-lg" /> Continue with Google
-                </button>
-                <p className="text-center text-slate-500 text-xs">No account? <button type="button" onClick={() => setTab(1)} className="text-cyan-400 hover:underline">Register free</button></p>
-              </form>
-            ) : (
-              <HeroRegisterForm onSwitchTab={() => setTab(0)} />
-            )}
-          </motion.div>
-        </AnimatePresence>
+            <FcGoogle className="text-xl" /> Continue with Google
+          </button>
+          <p className="text-center text-slate-500 text-xs">One click login • No password needed</p>
+        </div>
       </div>
     </div>
   );
