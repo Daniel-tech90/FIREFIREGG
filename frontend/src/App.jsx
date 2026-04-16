@@ -4,6 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { TournamentProvider } from "./context/TournamentContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import BottomNav from "./components/BottomNav";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/auth/AuthPage";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -30,7 +31,7 @@ function AppRoutes() {
     // Global Navbar + Footer shell for all public pages
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 pb-20 lg:pb-0">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
@@ -42,6 +43,7 @@ function AppRoutes() {
         </Routes>
       </main>
       <Footer />
+      <BottomNav />
     </div>
   );
 }
