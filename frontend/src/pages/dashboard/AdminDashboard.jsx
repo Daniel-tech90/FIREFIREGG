@@ -1308,8 +1308,8 @@ export default function AdminDashboard() {
         style={{ background: "rgba(10,5,5,0.97)", borderRight: "1px solid rgba(255,59,59,0.1)" }}>
         <div className="p-5 border-b border-red-500/10">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
-              <FiZap className="text-white text-sm" />
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <span

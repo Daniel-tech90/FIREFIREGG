@@ -53,8 +53,8 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center animate-pulse-glow">
-            <FiZap className="text-white text-sm" />
+          <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+            <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl font-black tracking-wider gradient-text">
             FREEFIRE<span className="text-white">GG</span>

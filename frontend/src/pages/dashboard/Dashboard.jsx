@@ -1002,8 +1002,8 @@ export default function Dashboard() {
         {/* Logo */}
         <div className="p-5 border-b border-white/5">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center">
-              <FiZap className="text-white text-sm" />
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-lg font-black gradient-text">FIREFIREGG</span>
           </Link>

@@ -485,8 +485,8 @@ export default function AuthPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center animate-pulse-glow">
-              <FiZap className="text-white" />
+            <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
+              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-2xl font-black tracking-wider gradient-text">FREEFIRE<span className="text-white">GG</span></span>
           </Link>
