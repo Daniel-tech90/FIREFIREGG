@@ -1,17 +1,3 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "./context/AuthContext";
-import { TournamentProvider } from "./context/TournamentContext";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import HomePage from "./pages/HomePage";
-import AuthPage from "./pages/auth/AuthPage";
-import Dashboard from "./pages/dashboard/Dashboard";
-import AdminDashboard from "./pages/dashboard/AdminDashboard";
-import AdminLoginPage from "./pages/auth/AdminLoginPage";
-import TournamentDetails from "./pages/TournamentDetails";
-import WalletPage from "./pages/WalletPage";
-
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
@@ -26,6 +12,7 @@ import AdminLoginPage from "./pages/auth/AdminLoginPage";
 import TournamentDetails from "./pages/TournamentDetails";
 import WalletPage from "./pages/WalletPage";
 
+// Routes that have their own full-page sidebar layout — no global Navbar/Footer
 const NO_SHELL = ["/dashboard", "/admin/dashboard", "/admin-secret-login"];
 
 function Shell({ children }) {
