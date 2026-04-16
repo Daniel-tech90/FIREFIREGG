@@ -11,6 +11,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { GiCrossedSwords, GiPodium } from "react-icons/gi";
 import { SectionTitle } from "../components/ui/index.jsx";
 import { useAuth } from "../context/AuthContext";
+import API from "../api/axios";
 import toast from "react-hot-toast";
 
 // ─── Animated Counter ───────────────────────────────────────────────────────
@@ -226,7 +227,10 @@ function HeroLoginCard() {
     e.preventDefault();
     if (!email || !pass) return toast.error("Fill all fields");
     setLoading(true);
-    setTimeout(() => { loginUser({ email, name: "Player" }); toast.success("Welcome back! 🎮"); navigate("/dashboard"); }, 1500);
+    API.post("/users/login", { email, password: pass })
+      .then(({ data }) => { loginUser(data); toast.success("Welcome back! 🎮"); navigate("/dashboard"); })
+      .catch(err => toast.error(err?.response?.data?.message || "Login failed"))
+      .finally(() => setLoading(false));
   };
 
   return (

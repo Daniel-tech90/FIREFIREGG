@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import Notification from "../models/Notification.js";
 import { sendWinnerEmail } from "../utils/mailer.js";
@@ -124,17 +125,51 @@ router.get("/", async (req, res) => {
   }
 });
 
+// POST login — validate email + password
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ message: "Email and password required" });
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(401).json({ message: "No account found with this email" });
+    if (user.status === "banned") return res.status(403).json({ message: "Your account has been banned" });
+    if (user.method === "Google") return res.status(401).json({ message: "This account uses Google login" });
+
+    const match = await user.matchPassword(password);
+    if (!match) return res.status(401).json({ message: "Incorrect password" });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // POST register / upsert user on login
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, avatar, method } = req.body;
+    const { name, email, avatar, method, password } = req.body;
     if (!name || !email) return res.status(400).json({ message: "Name and email required" });
 
-    const user = await User.findOneAndUpdate(
-      { email },
-      { name, avatar: avatar || "", method: method || "Email" },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const existing = await User.findOne({ email });
+    if (existing) {
+      // Google login — just update profile
+      const updated = await User.findOneAndUpdate(
+        { email },
+        { name, avatar: avatar || "", method: method || "Email" },
+        { new: true }
+      );
+      return res.json(updated);
+    }
+
+    // New registration — hash password
+    const hashed = password ? await bcrypt.hash(password, 10) : "";
+    const user = await User.create({
+      name, email,
+      avatar: avatar || "",
+      method: method || "Email",
+      password: hashed,
+    });
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });

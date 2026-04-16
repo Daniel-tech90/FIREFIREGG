@@ -9,6 +9,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
+import API from "../../api/axios";
 
 const TABS = ["User Login", "Register"];
 
@@ -70,11 +71,16 @@ function UserLogin({ onForgot }) {
     e.preventDefault();
     if (!email || !pass) return toast.error("Fill all fields");
     setLoading(true);
-    setTimeout(() => {
-      loginUser({ email, name: "Player" });
-      toast.success("Welcome back! 🎮");
-      nav("/dashboard");
-    }, 1500);
+    API.post("/users/login", { email, password: pass })
+      .then(({ data }) => {
+        loginUser(data);
+        toast.success("Welcome back! 🎮");
+        nav("/dashboard");
+      })
+      .catch(err => {
+        toast.error(err?.response?.data?.message || "Login failed");
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -175,12 +181,18 @@ function Register() {
     e.preventDefault();
     if (!terms) return toast.error("Accept terms to continue");
     if (form.pass !== form.confirm) return toast.error("Passwords don't match");
+    if (form.pass.length < 6) return toast.error("Password must be at least 6 characters");
     setLoading(true);
-    setTimeout(() => {
-      loginUser({ name: form.name, email: form.email });
-      toast.success("Account created! Welcome 🎮");
-      nav("/dashboard");
-    }, 1800);
+    API.post("/users/register", { name: form.name, email: form.email, password: form.pass, method: "Email" })
+      .then(({ data }) => {
+        loginUser(data);
+        toast.success("Account created! Welcome 🎮");
+        nav("/dashboard");
+      })
+      .catch(err => {
+        toast.error(err?.response?.data?.message || "Registration failed");
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
