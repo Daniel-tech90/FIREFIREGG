@@ -14,8 +14,8 @@ export default function BottomNav() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // Hide on dashboard / admin routes
-  if (["/dashboard", "/admin"].some(r => pathname.startsWith(r))) return null;
+  // Hide on dashboard/admin routes OR when user is logged in
+  if (user || ["/dashboard", "/admin"].some(r => pathname.startsWith(r))) return null;
 
   const handleClick = (e, tab) => {
     if (tab.protected && !user) {
