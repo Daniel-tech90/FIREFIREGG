@@ -34,11 +34,11 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-4"
       style={{ background: "#050508" }}>
-      <div className="absolute inset-0 opacity-20"
+      <div className="absolute inset-0 opacity-20 pointer-events-none"
         style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(255,59,59,0.2) 0%, transparent 60%)" }} />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-sm">
+        className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center mx-auto mb-3">
             <FiZap className="text-white text-2xl" />
