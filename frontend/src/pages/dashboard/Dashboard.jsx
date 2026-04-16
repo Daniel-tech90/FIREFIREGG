@@ -1080,7 +1080,7 @@ export default function Dashboard() {
       {sideOpen && <div className="fixed inset-0 z-30 bg-black/60 lg:hidden" onClick={() => setSideOpen(false)} />}
 
       {/* Main */}
-      <main className="flex-1 lg:ml-64 min-h-screen">
+      <main className="flex-1 lg:ml-64 min-h-screen overflow-x-hidden">
         {/* Top bar */}
         <header className="sticky top-0 z-20 glass-dark border-b border-white/5 px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -1121,7 +1121,7 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+        <div className="p-3 sm:p-6 max-w-6xl mx-auto overflow-x-hidden">
 
           {/* Winner scrolling banner */}
           <AnimatePresence>

@@ -77,7 +77,7 @@ export default function PlayerLookup({ tournaments = [], loadingTournaments = fa
   const s = TABS[tab];
 
   return (
-    <div className="glass rounded-2xl border border-white/5 p-5 w-full">
+    <div className="glass rounded-2xl border border-white/5 p-4 w-full overflow-hidden">
 
       {/* Title */}
       <div className="mb-3">
