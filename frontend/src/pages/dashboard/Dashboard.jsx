@@ -428,13 +428,19 @@ function JoinMatchPage({ tournaments, loading, user, ffName, balance, onJoined }
           </h2>
           <p className="text-slate-500 text-xs mt-0.5">Browse and join upcoming & live tournaments</p>
         </div>
-        <div className="flex gap-1 bg-white/5 rounded-xl p-1">
-          {["all", "upcoming", "live"].map(f => (
-            <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize transition-all ${
-                filter === f ? "bg-cyan-400/20 text-cyan-400" : "text-slate-500 hover:text-white"
-              }`}>{f}</button>
-          ))}
+        <div className="flex items-center gap-3">
+          <div className="glass rounded-xl px-4 py-2 border border-cyan-500/20" style={{ background: "rgba(6,182,212,0.07)" }}>
+            <p className="text-slate-400 text-xs">Wallet Balance</p>
+            <p className="text-cyan-400 font-black text-base">₹{(balance ?? 0).toLocaleString()}</p>
+          </div>
+          <div className="flex gap-1 bg-white/5 rounded-xl p-1">
+            {["all", "upcoming", "live"].map(f => (
+              <button key={f} onClick={() => setFilter(f)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize transition-all ${
+                  filter === f ? "bg-cyan-400/20 text-cyan-400" : "text-slate-500 hover:text-white"
+                }`}>{f}</button>
+            ))}
+          </div>
         </div>
       </div>
 
