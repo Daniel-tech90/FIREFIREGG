@@ -16,8 +16,12 @@ const app = express();
 const httpServer = createServer(app);
 
 const allowedOrigins = (origin, callback) => {
-  // Allow localhost (dev) + any deployed frontend
-  if (!origin || /^http:\/\/localhost:\d+$/.test(origin) || process.env.CLIENT_URL === origin) {
+  if (
+    !origin ||
+    /^http:\/\/localhost:\d+$/.test(origin) ||
+    origin === process.env.CLIENT_URL ||
+    origin.endsWith(".vercel.app")
+  ) {
     callback(null, true);
   } else {
     callback(new Error("Not allowed by CORS"));

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: firefiregg-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://boor44701_db_user:TiAoM6eyPj6o5CD4@firefiregg.pu3bdji.mongodb.net/firefiregg?retryWrites=true&w=majority&appName=FIREFIREGG
+      - key: PORT
+        value: 5000
+      - key: CLIENT_URL
+        value: https://firefiregg.vercel.app
+      - key: NODE_VERSION
+        value: 18
