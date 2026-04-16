@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -8,8 +8,15 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AuthPage() {
-  const { loginUser } = useAuth();
+  const { loginUser, user } = useAuth();
   const nav = useNavigate();
+
+  // Already logged in — go straight to dashboard
+  useEffect(() => {
+    if (user) nav("/dashboard", { replace: true });
+  }, [user]);
+
+  if (user) return null;
 
   const handleGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {

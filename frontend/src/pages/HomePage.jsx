@@ -37,7 +37,7 @@ function Counter({ end, suffix = "" }) {
 }
 
 function HeroLoginCard() {
-  const { loginUser } = useAuth();
+  const { loginUser, user } = useAuth();
   const navigate = useNavigate();
 
   const handleGoogle = useGoogleLogin({
@@ -61,19 +61,39 @@ function HeroLoginCard() {
     <div className="relative w-full max-w-sm">
       <div className="absolute inset-0 rounded-3xl bg-cyan-400/10 blur-3xl animate-pulse" />
       <div className="relative glass-dark rounded-3xl p-7 border border-white/10">
-        <h3 className="text-white font-black text-xl mb-1">Get Started</h3>
-        <p className="text-slate-400 text-xs mb-6">Join 250,000+ players competing daily</p>
-        <div className="space-y-3">
-          <p className="text-slate-300 text-sm text-center">Sign in or create your account instantly</p>
-          <button
-            type="button"
-            onClick={() => handleGoogle()}
-            className="w-full glass border border-white/10 rounded-xl py-3.5 flex items-center justify-center gap-3 text-sm font-bold text-slate-200 hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all"
-          >
-            <FcGoogle className="text-xl" /> Continue with Google
-          </button>
-          <p className="text-center text-slate-500 text-xs">One click login • No password needed</p>
-        </div>
+        {user ? (
+          <>
+            <div className="text-center mb-4">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-black text-2xl mx-auto mb-3">
+                {user.name?.[0] || "P"}
+              </div>
+              <p className="text-white font-black text-base">Welcome back, {user.name?.split(" ")[0]}! 🎮</p>
+              <p className="text-slate-400 text-xs mt-1">{user.email}</p>
+            </div>
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="btn-primary w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+            >
+              <span>Go to Dashboard →</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <h3 className="text-white font-black text-xl mb-1">Get Started</h3>
+            <p className="text-slate-400 text-xs mb-6">Join 250,000+ players competing daily</p>
+            <div className="space-y-3">
+              <p className="text-slate-300 text-sm text-center">Sign in or create your account instantly</p>
+              <button
+                type="button"
+                onClick={() => handleGoogle()}
+                className="w-full glass border border-white/10 rounded-xl py-3.5 flex items-center justify-center gap-3 text-sm font-bold text-slate-200 hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all"
+              >
+                <FcGoogle className="text-xl" /> Continue with Google
+              </button>
+              <p className="text-center text-slate-500 text-xs">One click login • No password needed</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
