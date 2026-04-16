@@ -53,8 +53,11 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
-            <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+          <div className="relative w-9 h-9 flex-shrink-0">
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 blur-md opacity-70 group-hover:opacity-100 transition-opacity" />
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-yellow-400/60 shadow-lg" style={{ boxShadow: "0 0 16px rgba(250,204,21,0.6)" }}>
+              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+            </div>
           </div>
           <span className="text-xl font-black tracking-wider gradient-text">
             FREEFIRE<span className="text-white">GG</span>

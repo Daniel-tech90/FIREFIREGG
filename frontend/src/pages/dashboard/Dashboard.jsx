@@ -1002,8 +1002,11 @@ export default function Dashboard() {
         {/* Logo */}
         <div className="p-5 border-b border-white/5">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
-              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+            <div className="relative w-9 h-9 flex-shrink-0">
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 blur-md opacity-70" />
+              <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-yellow-400/60" style={{ boxShadow: "0 0 14px rgba(250,204,21,0.6)" }}>
+                <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+              </div>
             </div>
             <span className="text-lg font-black gradient-text">FIREFIREGG</span>
           </Link>

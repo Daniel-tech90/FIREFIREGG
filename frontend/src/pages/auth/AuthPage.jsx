@@ -485,8 +485,11 @@ export default function AuthPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
-              <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+            <div className="relative w-12 h-12 flex-shrink-0">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 blur-lg opacity-80" />
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-yellow-400/70" style={{ boxShadow: "0 0 24px rgba(250,204,21,0.7), 0 0 48px rgba(249,115,22,0.4)" }}>
+                <img src="/logo.jpg" alt="logo" className="w-full h-full object-cover" />
+              </div>
             </div>
             <span className="text-2xl font-black tracking-wider gradient-text">FREEFIRE<span className="text-white">GG</span></span>
           </Link>
