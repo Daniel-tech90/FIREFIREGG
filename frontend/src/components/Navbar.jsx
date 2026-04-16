@@ -22,7 +22,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  if (HIDDEN_ROUTES.some(r => location.pathname.startsWith(r))) return null;
+  const hidden = HIDDEN_ROUTES.some(r => location.pathname.startsWith(r));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -39,6 +39,8 @@ export default function Navbar() {
       navigate("/auth");
     }
   };
+
+  if (hidden) return null;
 
   return (
     <header
