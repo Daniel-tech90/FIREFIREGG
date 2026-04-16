@@ -835,27 +835,27 @@ function WhatsAppSection({ user, onSaved }) {
           </div>
         )}
       </div>
-      <div className="p-5 space-y-3">
-        <p className="text-white font-black text-base tracking-wide" style={{ textShadow: "0 0 20px rgba(255,255,255,0.4)" }}>📲 Enter your WhatsApp number to receive tournament winning amount.</p>
+      <div className="p-4 space-y-3">
+        <p className="text-white font-bold text-sm">📲 Add WhatsApp to receive prize amount.</p>
         <div className="flex gap-2">
           <select
             value={cc} onChange={e => setCc(e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-xl px-2 py-2.5 text-slate-300 text-sm outline-none focus:border-green-400 transition-all flex-shrink-0"
+            className="bg-white/5 border border-white/10 rounded-lg px-2 py-2 text-slate-300 text-xs outline-none focus:border-green-400 transition-all flex-shrink-0 w-16"
             style={{ background: "#0a0f0a" }}>
             {CODES.map(c => <option key={c} value={c} style={{ background: "#0a0f0a" }}>{c}</option>)}
           </select>
           <input
             type="tel" maxLength={10}
-            placeholder="Enter WhatsApp Number"
+            placeholder="WhatsApp Number"
             value={number}
             onChange={e => { setNumber(e.target.value.replace(/\D/g,"")); setError(""); setSaved(false); }}
-            className={`flex-1 rounded-xl px-4 py-2.5 text-sm text-white outline-none transition-all placeholder:text-white/20 ${
+            className={`flex-1 min-w-0 rounded-lg px-3 py-2 text-sm text-white outline-none transition-all placeholder:text-white/20 ${
               error ? "border-2 border-red-500 bg-red-500/5" : "border border-white/10 bg-white/5 focus:border-green-400 focus:bg-green-400/5"
             }`}
           />
           <button
             onClick={handleSave} disabled={loading}
-            className="px-5 py-2.5 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 disabled:opacity-50 flex items-center gap-2 flex-shrink-0"
+            className="px-3 py-2 rounded-lg text-white font-bold text-xs transition-all hover:opacity-90 disabled:opacity-50 flex-shrink-0"
             style={{ background: "linear-gradient(135deg,#22c55e,#16a34a)" }}>
             {loading
               ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
