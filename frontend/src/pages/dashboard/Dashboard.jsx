@@ -171,21 +171,20 @@ function MyTournaments({ tournaments, loading, onJoin, user }) {
                   );
                 })()}
 
+                {/* Rules */}
+                {t.rules && (
+                  <div className="rounded-lg p-2.5 border border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
+                    <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Rules</p>
+                    <p className="text-slate-300 text-xs leading-relaxed">{t.rules}</p>
+                  </div>
+                )}
+
                 {/* Room Details */}
                 <RoomDetails
                   tournament={t}
                   isLive={status === "live"}
                   isJoined={!!t.joinedPlayers?.find(p => p.id === user?._id)}
                 />
-
-                {/* Prize dist */}
-                {(t.prize1st || t.prize2nd || t.prize3rd) && (
-                  <div className="flex gap-1.5 flex-wrap">
-                    {t.prize1st && <span className="text-xs px-2 py-0.5 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">🥇 ₹{Number(t.prize1st).toLocaleString()}</span>}
-                    {t.prize2nd && <span className="text-xs px-2 py-0.5 rounded-lg bg-slate-500/10 text-slate-300 border border-slate-500/20">🥈 ₹{Number(t.prize2nd).toLocaleString()}</span>}
-                    {t.prize3rd && <span className="text-xs px-2 py-0.5 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">🥉 ₹{Number(t.prize3rd).toLocaleString()}</span>}
-                  </div>
-                )}
               </div>
 
               {/* Join button */}
@@ -524,24 +523,20 @@ function JoinMatchPage({ tournaments, loading, user, ffName, balance, onJoined }
                     }} />
                   </div>
 
+                  {/* Rules */}
+                  {t.rules && (
+                    <div className="rounded-lg p-2.5 border border-white/5" style={{ background: "rgba(255,255,255,0.02)" }}>
+                      <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Rules</p>
+                      <p className="text-slate-300 text-xs leading-relaxed">{t.rules}</p>
+                    </div>
+                  )}
+
                   {/* Room Details */}
                   <RoomDetails
                     tournament={t}
                     isLive={status === "live"}
                     isJoined={!!alreadyJoined}
                   />
-
-                  {(t.prize1st || t.prize2nd || t.prize3rd) && (
-                    <div className="flex gap-1.5 flex-wrap">
-                      {t.prize1st && <span className="text-xs px-2 py-0.5 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">🥇 ₹{Number(t.prize1st).toLocaleString()}</span>}
-                      {t.prize2nd && <span className="text-xs px-2 py-0.5 rounded-lg bg-slate-500/10 text-slate-300 border border-slate-500/20">🥈 ₹{Number(t.prize2nd).toLocaleString()}</span>}
-                      {t.prize3rd && <span className="text-xs px-2 py-0.5 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">🥉 ₹{Number(t.prize3rd).toLocaleString()}</span>}
-                    </div>
-                  )}
-
-                  {t.description && (
-                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">{t.description}</p>
-                  )}
                 </div>
 
                 {/* Join button */}
