@@ -1084,8 +1084,8 @@ export default function Dashboard() {
         {/* Top bar */}
         <header className="sticky top-0 z-20 glass-dark border-b border-white/5 px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => setSideOpen(true)} className="lg:hidden text-slate-400 hover:text-white">
-              <FiMenu size={20} />
+            <button onClick={() => setSideOpen(true)} className="lg:hidden text-white hover:text-cyan-400 transition-colors">
+              <FiMenu size={24} />
             </button>
             <h1 className="text-white font-bold capitalize">{active}</h1>
           </div>
