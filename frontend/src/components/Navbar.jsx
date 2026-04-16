@@ -13,12 +13,16 @@ const navLinks = [
   { label: "Contact", to: "/contact", protected: true },
 ];
 
+const HIDDEN_ROUTES = ["/dashboard", "/admin/dashboard", "/admin-secret-login"];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  if (HIDDEN_ROUTES.some(r => location.pathname.startsWith(r))) return null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
